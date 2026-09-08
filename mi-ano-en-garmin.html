@@ -195,7 +195,7 @@
     <div class="wrap">
       <p class="eyebrow">⌚ Garmin · sincronización automática 2x al día</p>
       <h1>Tu año en datos 🏃‍♂️</h1>
-      <p class="subtitle">Enero – Septiembre 2026 · 250 días registrados · 160 actividades</p>
+      <p class="subtitle" id="subtitleText">Enero – Septiembre 2026 · 250 días registrados · 160 actividades</p>
     </div>
   </div>
 
@@ -204,23 +204,23 @@
       <div class="card">
         <div class="stat-icon" style="background:var(--blue-tint); color:var(--blue);">📏</div>
         <p class="stat-label">Distancia total recorrida</p>
-        <div class="stat-value">955 <span class="stat-unit">km</span></div>
+        <div class="stat-value"><span id="statKm">955</span> <span class="stat-unit">km</span></div>
       </div>
       <div class="card">
         <div class="stat-icon" style="background:var(--orange-tint); color:var(--orange);">⏱️</div>
         <p class="stat-label">Horas entrenando</p>
-        <div class="stat-value">150 <span class="stat-unit">h</span></div>
+        <div class="stat-value"><span id="statHours">150</span> <span class="stat-unit">h</span></div>
       </div>
       <div class="card">
         <div class="stat-icon" style="background:var(--aqua-tint); color:var(--aqua);">🏋️</div>
         <p class="stat-label">Actividades registradas</p>
-        <div class="stat-value">160</div>
+        <div class="stat-value" id="statActivities">160</div>
       </div>
       <div class="card">
         <div class="stat-icon" style="background:var(--red-tint); color:var(--red);">❤️</div>
-        <p class="stat-label">FC en reposo (ene → sep)</p>
-        <div class="stat-value">39.1 <span class="stat-unit">bpm</span></div>
-        <div class="stat-delta good">▼ 1.7 bpm — mejor forma física</div>
+        <p class="stat-label" id="statRHRLabel">FC en reposo (ene → sep)</p>
+        <div class="stat-value"><span id="statRHR">39.1</span> <span class="stat-unit">bpm</span></div>
+        <div class="stat-delta good" id="statRHRDelta">▼ 1.7 bpm — mejor forma física</div>
       </div>
     </div>
 
@@ -240,7 +240,7 @@
       <div class="callout" style="background:var(--violet-tint); margin-bottom:0;">
         <span class="icon">🏁</span>
         <div>
-          <p class="title">Plan de puesta a punto: solo quedan 12 días</p>
+          <p class="title">Plan de puesta a punto: solo quedan <span id="taperTitleDays">12</span> días</p>
           <p>Con los 30K del 5 de sep todavía en el cuerpo y la carrera el 20 de sep, tu semana de descarga y el tapering de Copenhague son literalmente la misma cosa — no hay que elegir entre recuperar y afinar, se hace a la vez. El objetivo estos días no es ganar más fondo (ya no da tiempo ni falta que hace), es llegar a la línea de salida con el HRV y el sueño recuperados.</p>
           <ul class="taper-list">
             <li><span class="day">Días 1–5</span><span>(hasta el 13 sep) — <b>volumen bajo, todo suave.</b> 3-4 rodajes cortos y fáciles (30-40 min) + 1-2 días de descanso total. Nada de series ni ritmos fuertes: el cuerpo está terminando de absorber los 30K.</span></li>
@@ -272,7 +272,7 @@
     <div class="section two-col">
       <div class="card">
         <div class="section-head"><span class="section-emoji">🏃</span><h2>Tipos de actividad</h2></div>
-        <p class="section-sub">160 actividades en total, enero–septiembre</p>
+        <p class="section-sub" id="typeSectionSub">160 actividades en total, enero–septiembre</p>
         <div id="typeBars"></div>
       </div>
       <div class="card">
@@ -283,7 +283,7 @@
     </div>
 
     <div class="section">
-      <div class="section-head"><span class="section-emoji">🔎</span><h2>Últimos 7 días (2–8 sep) vs. media del año</h2></div>
+      <div class="section-head"><span class="section-emoji">🔎</span><h2>Últimos 7 días (<span id="last7RangeLabel">2–8 sep</span>) vs. media del año</h2></div>
       <div class="hero-grid" id="last7Grid" style="margin-bottom:0;"></div>
     </div>
 
@@ -308,36 +308,68 @@
   </div>
 </div>
 
+<script type="application/json" id="dash-data">
+{
+  "monthLabels": ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep"],
+  "monthly": {
+    "rhr":      [40.8, 39.6, 40.1, 40.5, 39.4, 39.3, 37.3, 37.3, 39.1],
+    "hrv":      [95.8, 105.1, 100.3, 98.1, 104.1, 101.6, 98.8, 90.7, 90.3],
+    "sleepH":   [7.5, 8.0, 7.8, 7.6, 7.5, 7.4, 7.0, 6.8, 7.8],
+    "sleepScore":[74.8, 79.3, 79.0, 77.5, 79.2, 76.3, 80.5, 77.3, 83.6],
+    "stress":   [20.6, 20.9, 21.9, 22.1, 22.1, 21.3, 18.1, 18.3, 19.1],
+    "steps":    [13811, 10982, 11002, 12552, 10206, 10830, 11214, 12932, 10917],
+    "readiness":[43.9, 57.1, 67.1, 48.6, 65.4, 52.3, 56.9, 40.1, 61.9]
+  },
+  "typeTotals": [
+    {"label": "Running", "count": 79, "color": "blue", "icon": "🏃"},
+    {"label": "Fuerza", "count": 43, "color": "orange", "icon": "🏋️"},
+    {"label": "Ciclismo indoor", "count": 12, "color": "aqua", "icon": "🚴"},
+    {"label": "Otro", "count": 12, "color": "yellow", "icon": "⚡"},
+    {"label": "Cinta de correr", "count": 10, "color": "magenta", "icon": "🎽"},
+    {"label": "Otros varios", "count": 4, "color": "green", "icon": "✨"}
+  ],
+  "topActivities": [
+    {"name": "Bigues i Riells — 30K", "date": "5 sep 2026", "km": 30},
+    {"name": "Torredembarra — 24K", "date": "15 ago 2026", "km": 24},
+    {"name": "Madrid — Media maratón", "date": "26 abr 2026", "km": 21.5},
+    {"name": "Sevilla — Media maratón", "date": "25 ene 2026", "km": 21.4},
+    {"name": "Bigues i Riells — 26K", "date": "22 ago 2026", "km": 20.9}
+  ],
+  "last7": { "rhr": 39, "hrv": 88.7, "sleepH": 7.7, "readiness": 66.1 },
+  "stats": {
+    "totalKm": 955,
+    "totalHours": 150,
+    "activitiesCount": 160,
+    "daysRegistered": 250,
+    "rhrNow": 39.1,
+    "rhrDelta": 1.7,
+    "monthRangeLabel": "Enero – Septiembre 2026",
+    "monthRangeShort": "enero–septiembre",
+    "last7RangeLabel": "2–8 sep"
+  }
+}
+</script>
 <script>
 (function () {
-  const monthLabels = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep"];
+  const DATA = JSON.parse(document.getElementById("dash-data").textContent);
+  const monthLabels = DATA.monthLabels;
+  const monthly = DATA.monthly;
+  const typeTotals = DATA.typeTotals;
+  const topActivities = DATA.topActivities;
+  const last7 = DATA.last7;
+  const stats = DATA.stats;
 
-  const monthly = {
-    rhr:      [40.8, 39.6, 40.1, 40.5, 39.4, 39.3, 37.3, 37.3, 39.1],
-    hrv:      [95.8, 105.1, 100.3, 98.1, 104.1, 101.6, 98.8, 90.7, 90.3],
-    sleepH:   [7.5, 8.0, 7.8, 7.6, 7.5, 7.4, 7.0, 6.8, 7.8],
-    sleepScore:[74.8, 79.3, 79.0, 77.5, 79.2, 76.3, 80.5, 77.3, 83.6],
-    stress:   [20.6, 20.9, 21.9, 22.1, 22.1, 21.3, 18.1, 18.3, 19.1],
-    steps:    [13811, 10982, 11002, 12552, 10206, 10830, 11214, 12932, 10917],
-    readiness:[43.9, 57.1, 67.1, 48.6, 65.4, 52.3, 56.9, 40.1, 61.9]
-  };
-
-  const typeTotals = [
-    {label: "Running", count: 79, color: "blue", icon: "🏃"},
-    {label: "Fuerza", count: 43, color: "orange", icon: "🏋️"},
-    {label: "Ciclismo indoor", count: 12, color: "aqua", icon: "🚴"},
-    {label: "Otro", count: 12, color: "yellow", icon: "⚡"},
-    {label: "Cinta de correr", count: 10, color: "magenta", icon: "🎽"},
-    {label: "Otros varios", count: 4, color: "green", icon: "✨"},
-  ];
-
-  const topActivities = [
-    {name: "Bigues i Riells — 30K", date: "5 sep 2026", km: 30},
-    {name: "Torredembarra — 24K", date: "15 ago 2026", km: 24},
-    {name: "Madrid — Media maratón", date: "26 abr 2026", km: 21.5},
-    {name: "Sevilla — Media maratón", date: "25 ene 2026", km: 21.4},
-    {name: "Bigues i Riells — 26K", date: "22 ago 2026", km: 20.9},
-  ];
+  // ---- header stats (regenerated from garmin/data.json) ----
+  document.getElementById("subtitleText").textContent = `${stats.monthRangeLabel} · ${stats.daysRegistered} días registrados · ${stats.activitiesCount} actividades`;
+  document.getElementById("statKm").textContent = stats.totalKm;
+  document.getElementById("statHours").textContent = stats.totalHours;
+  document.getElementById("statActivities").textContent = stats.activitiesCount;
+  document.getElementById("statRHR").textContent = stats.rhrNow;
+  document.getElementById("statRHRDelta").textContent = stats.rhrDelta >= 0
+    ? `▼ ${stats.rhrDelta} bpm — mejor forma física`
+    : `▲ ${Math.abs(stats.rhrDelta)} bpm — peor forma física`;
+  document.getElementById("typeSectionSub").textContent = `${stats.activitiesCount} actividades en total, ${stats.monthRangeShort}`;
+  document.getElementById("last7RangeLabel").textContent = stats.last7RangeLabel;
 
   // ---- goal countdown ----
   (function () {
@@ -347,13 +379,13 @@
     const diffDays = Math.ceil((raceDate - now) / msPerDay);
     const numEl = document.getElementById("goalDays");
     const lblEl = document.getElementById("goalDaysLbl");
-    if (diffDays > 1) { numEl.textContent = diffDays; lblEl.textContent = "días"; }
-    else if (diffDays === 1) { numEl.textContent = "1"; lblEl.textContent = "día — ¡mañana!"; }
+    const taperEl = document.getElementById("taperTitleDays");
+    if (diffDays > 1) { numEl.textContent = diffDays; lblEl.textContent = "días"; if (taperEl) taperEl.textContent = diffDays; }
+    else if (diffDays === 1) { numEl.textContent = "1"; lblEl.textContent = "día — ¡mañana!"; if (taperEl) taperEl.textContent = "1"; }
     else if (diffDays === 0) { numEl.textContent = "🏁"; lblEl.textContent = "¡hoy es el día!"; }
     else { numEl.textContent = "✓"; lblEl.textContent = "carrera completada"; }
   })();
 
-  const last7 = { rhr: 39, hrv: 88.7, sleepH: 7.7, readiness: 66.1 };
   function avg(a){ return a.reduce((x,y)=>x+y,0)/a.length; }
   function round(x,d=1){ const p=Math.pow(10,d); return Math.round(x*p)/p; }
   const yearAvg = { rhr: avg(monthly.rhr), hrv: avg(monthly.hrv), sleepH: avg(monthly.sleepH), readiness: avg(monthly.readiness) };
