@@ -3,65 +3,119 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Espe — Panel de entrenamiento</title>
+<title>Panel de entrenamiento — @trota_conmigo</title>
 <style>
-  :root {
-    color-scheme: light;
-    --surface-1: #fcfcfb;
-    --page-plane: #f5f6f4;
-    --text-primary: #0b0b0b;
-    --text-secondary: #52514e;
-    --text-muted: #898781;
-    --border: rgba(11,11,11,0.08);
-    --shadow: 0 1px 2px rgba(11,11,11,0.04), 0 8px 24px rgba(11,11,11,0.05);
-    --blue: #2a78d6; --blue-tint: #e3edfb;
-    --violet: #4a3aa7; --violet-tint: #e6e3f7;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      color-scheme: dark;
-      --surface-1: #1e1e1c;
-      --page-plane: #0d0d0d;
-      --text-primary: #ffffff;
-      --text-secondary: #c3c2b7;
-      --text-muted: #8f8d86;
-      --border: rgba(255,255,255,0.08);
-      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
-      --blue: #3987e5; --blue-tint: #1c3355;
-      --violet: #9085e9; --violet-tint: #262047;
-    }
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--page-plane); color: var(--text-primary); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 64px 20px; }
-  h1 { font-size: 28px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.01em; }
-  .sub { font-size: 15px; color: var(--text-secondary); margin: 0 0 36px; }
-  .grid { display: grid; gap: 16px; }
-  a.card { display: block; background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px; padding: 22px 24px; box-shadow: var(--shadow); text-decoration: none; color: inherit; }
-  a.card:hover { transform: translateY(-1px); }
-  .card .icon { width: 42px; height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 21px; margin-bottom: 14px; }
-  .card h2 { font-size: 18px; margin: 0 0 4px; font-weight: 700; }
-  .card p { font-size: 13.5px; color: var(--text-secondary); margin: 0; line-height: 1.5; }
-  .footer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 40px; }
+:root {
+color-scheme: light;
+--surface-1: #fcfcfb;
+--page-plane: #f5f6f4;
+--text-primary: #0b0b0b;
+--text-secondary: #52514e;
+--text-muted: #898781;
+--border: rgba(11,11,11,0.08);
+--shadow: 0 1px 2px rgba(11,11,11,0.04), 0 8px 24px rgba(11,11,11,0.05);
+--blue: #2a78d6; --blue-tint: #e3edfb;
+--violet: #4a3aa7; --violet-tint: #e6e3f7;
+}
+@media (prefers-color-scheme: dark) {
+:root {
+color-scheme: dark;
+--surface-1: #1e1e1c;
+--page-plane: #0d0d0d;
+--text-primary: #ffffff;
+--text-secondary: #c3c2b7;
+--text-muted: #8f8d86;
+--border: rgba(255,255,255,0.08);
+--shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+--blue: #3987e5; --blue-tint: #1c3355;
+--violet: #9085e9; --violet-tint: #262047;
+}
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page-plane); color: var(--text-primary); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+
+.brand-bar { background: #111113; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.brand-bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 20px; max-width: 900px; margin: 0 auto; }
+.brand-bar .handle { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: #fff; font-weight: 700; font-size: 13.5px; letter-spacing: -0.01em; }
+.brand-bar .handle:hover { opacity: 0.85; }
+.brand-mark { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #f58529 0%, #dd2a7b 45%, #8134af 70%, #515bd4 100%); display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+.brand-tagline { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 500; display: none; }
+@media (min-width: 620px) { .brand-tagline { display: inline; } }
+
+.hero-band {
+background: linear-gradient(120deg, var(--blue) 0%, var(--violet) 100%);
+padding: 56px 20px 92px;
+position: relative;
+overflow: hidden;
+}
+.hero-band::before { content: ""; position: absolute; top: -80px; right: -40px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 70%); pointer-events: none; }
+.hero-band::after { content: ""; position: absolute; bottom: -120px; left: 4%; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.10), transparent 70%); pointer-events: none; }
+.hero-inner { max-width: 900px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; color: #fff; text-align: center; }
+.eyebrow { font-size: 13px; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 12px; font-weight: 650; }
+h1 { font-size: 32px; margin: 0 0 10px; font-weight: 700; letter-spacing: -0.01em; }
+.sub { font-size: 15px; color: rgba(255,255,255,0.88); margin: 0; }
+
+.wrap { max-width: 900px; margin: -56px auto 0; padding: 0 20px 64px; position: relative; z-index: 2; }
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(2, 1fr); margin-bottom: 28px; }
+@media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+a.card {
+display: block; background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px;
+padding: 22px 24px; box-shadow: var(--shadow); text-decoration: none; color: inherit;
+transition: transform .15s ease, box-shadow .15s ease;
+}
+a.card:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(11,11,11,0.06), 0 14px 30px rgba(11,11,11,0.09); }
+.card .icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px; }
+.card h2 { font-size: 18px; margin: 0 0 6px; font-weight: 700; }
+.card p { font-size: 13.5px; color: var(--text-secondary); margin: 0; line-height: 1.5; }
+
+.status-strip {
+display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-radius: 12px;
+background: var(--surface-1); border: 1px solid var(--border); box-shadow: var(--shadow);
+font-size: 13px; color: var(--text-secondary);
+}
+.status-strip .dot { width: 9px; height: 9px; border-radius: 50%; background: #0ca30c; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(12,163,12,0.15); }
+.status-strip b { color: var(--text-primary); }
+
+.footer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 28px; }
+.footer a { color: inherit; }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>🏃‍♂️ Panel de entrenamiento</h1>
-    <p class="sub">Datos de Garmin sincronizados automáticamente, dos veces al día.</p>
-    <div class="grid">
-      <a class="card" href="mi-ano-en-garmin.html">
-        <div class="icon" style="background:var(--blue-tint); color:var(--blue);">📊</div>
-        <h2>Mi año en Garmin</h2>
-        <p>Sueño, HRV, frecuencia cardíaca, estrés y actividades de enero a septiembre 2026.</p>
-      </a>
-      <a class="card" href="objetivos-de-carrera.html">
-        <div class="icon" style="background:var(--violet-tint); color:var(--violet);">🎯</div>
-        <h2>Objetivos de carrera</h2>
-        <p>Copenhague, Cardiff y Chicago — cuenta atrás y plan de entrenamiento hasta cada carrera.</p>
-      </a>
-    </div>
-    <p class="footer">Actualizado manualmente por Espe · datos personales de entrenamiento</p>
-  </div>
+<div class="brand-bar"><div class="wrap">
+<a class="handle" href="https://instagram.com/trota_conmigo" target="_blank" rel="noopener">
+<span class="brand-mark">🏃‍♂️</span><span>@trota_conmigo</span>
+</a>
+<span class="brand-tagline">Entrenamientos y carreras · sincronizado desde Garmin</span>
+</div></div>
+
+<div class="hero-band">
+<div class="hero-inner">
+<p class="eyebrow">⌚ Datos de Garmin Connect</p>
+<h1>Panel de entrenamiento 🏃‍♂️</h1>
+<p class="sub">El progreso y las carreras de @trota_conmigo, sincronizados automáticamente dos veces al día.</p>
+</div>
+</div>
+
+<div class="wrap">
+<div class="grid">
+<a class="card" href="mi-ano-en-garmin.html">
+<div class="icon" style="background:var(--blue-tint); color:var(--blue);">📊</div>
+<h2>Mi año en Garmin</h2>
+<p>Sueño, HRV, frecuencia cardíaca, estrés y actividades de enero a septiembre 2026.</p>
+</a>
+<a class="card" href="objetivos-de-carrera.html">
+<div class="icon" style="background:var(--violet-tint); color:var(--violet);">🎯</div>
+<h2>Objetivos de carrera</h2>
+<p>Copenhague, Cardiff y Chicago — cuenta atrás y plan de entrenamiento hasta cada carrera.</p>
+</a>
+</div>
+
+<div class="status-strip">
+<span class="dot"></span>
+<span>Sincronización <b>automática</b> desde Garmin Connect a las 5:00 y las 17:00 (UTC) — estos paneles se actualizan solos.</span>
+</div>
+
+<p class="footer">Datos personales de entrenamiento de <a href="https://instagram.com/trota_conmigo" target="_blank" rel="noopener">@trota_conmigo</a></p>
+</div>
 </body>
 </html>
