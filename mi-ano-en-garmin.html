@@ -5,307 +5,341 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mi año en Garmin</title>
 <style>
-  .nav { background: var(--surface-1, #fcfcfb); border-bottom: 1px solid rgba(11,11,11,0.08); }
-  .nav .wrap { display: flex; align-items: center; gap: 18px; padding: 12px 20px; max-width: 1140px; margin: 0 auto; }
-  .nav a { font-size: 13px; font-weight: 600; text-decoration: none; color: #52514e; }
-  .nav a.active { color: #2a78d6; }
-  @media (prefers-color-scheme: dark) {
-    .nav { background: #1e1e1c; border-bottom-color: rgba(255,255,255,0.08); }
-    .nav a { color: #c3c2b7; }
-    .nav a.active { color: #3987e5; }
-  }
-  .viz-root {
-    color-scheme: light;
-    --surface-1:      #fcfcfb;
-    --page-plane:     #f5f6f4;
-    --text-primary:   #0b0b0b;
-    --text-secondary: #52514e;
-    --text-muted:     #898781;
-    --gridline:       #e1e0d9;
-    --baseline:       #c3c2b7;
-    --border:         rgba(11,11,11,0.08);
-    --shadow:         0 1px 2px rgba(11,11,11,0.04), 0 8px 24px rgba(11,11,11,0.05);
-    --blue:      #2a78d6; --blue-tint:    #e3edfb;
-    --orange:    #eb6834; --orange-tint:  #fce7de;
-    --aqua:      #1baf7a; --aqua-tint:    #dff5ec;
-    --yellow:    #eda100; --yellow-tint:  #fbecd2;
-    --magenta:   #e87ba4; --magenta-tint: #fbe6ee;
-    --green:     #008300; --green-tint:   #dcefdc;
-    --violet:    #4a3aa7; --violet-tint:  #e6e3f7;
-    --red:       #e34948; --red-tint:     #fbe2e1;
-    --good:      #0ca30c;
-    --warning:   #fab219;
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-    background: var(--page-plane);
-    color: var(--text-primary);
-    padding: 0 0 72px;
-    box-sizing: border-box;
-    min-height: 100%;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:where(:not([data-theme="light"])) .viz-root {
-      color-scheme: dark;
-      --surface-1:      #1e1e1c;
-      --page-plane:     #0d0d0d;
-      --text-primary:   #ffffff;
-      --text-secondary: #c3c2b7;
-      --text-muted:     #8f8d86;
-      --gridline:       #2c2c2a;
-      --baseline:       #3a3a37;
-      --border:         rgba(255,255,255,0.08);
-      --shadow:         0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
-      --blue:      #3987e5; --blue-tint:    #1c3355;
-      --orange:    #d95926; --orange-tint:  #3d2417;
-      --aqua:      #199e70; --aqua-tint:    #113329;
-      --yellow:    #c98500; --yellow-tint:  #3a2c0d;
-      --magenta:   #d55181; --magenta-tint: #3a1f29;
-      --green:     #1fae1f; --green-tint:   #142f14;
-      --violet:    #9085e9; --violet-tint:  #262047;
-      --red:       #e66767; --red-tint:     #3a1f1e;
-    }
-  }
-  :root[data-theme="dark"] .viz-root {
-    color-scheme: dark;
-    --surface-1:      #1e1e1c;
-    --page-plane:     #0d0d0d;
-    --text-primary:   #ffffff;
-    --text-secondary: #c3c2b7;
-    --text-muted:     #8f8d86;
-    --gridline:       #2c2c2a;
-    --baseline:       #3a3a37;
-    --border:         rgba(255,255,255,0.08);
-    --shadow:         0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
-    --blue:      #3987e5; --blue-tint:    #1c3355;
-    --orange:    #d95926; --orange-tint:  #3d2417;
-    --aqua:      #199e70; --aqua-tint:    #113329;
-    --yellow:    #c98500; --yellow-tint:  #3a2c0d;
-    --magenta:   #d55181; --magenta-tint: #3a1f29;
-    --green:     #1fae1f; --green-tint:   #142f14;
-    --violet:    #9085e9; --violet-tint:  #262047;
-    --red:       #e66767; --red-tint:     #3a1f1e;
-  }
+.brand-bar { background: #111113; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.brand-bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 20px; max-width: 1140px; margin: 0 auto; }
+.brand-bar .handle { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: #fff; font-weight: 700; font-size: 13.5px; letter-spacing: -0.01em; }
+.brand-bar .handle:hover { opacity: 0.85; }
+.brand-mark { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #f58529 0%, #dd2a7b 45%, #8134af 70%, #515bd4 100%); display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+.brand-tagline { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 500; display: none; }
+@media (min-width: 620px) { .brand-tagline { display: inline; } }
 
-  .viz-root * { box-sizing: border-box; }
-  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+.nav { background: var(--surface-1, #fcfcfb); border-bottom: 1px solid rgba(11,11,11,0.08); }
+.nav .wrap { display: flex; align-items: center; gap: 18px; padding: 12px 20px; max-width: 1140px; margin: 0 auto; }
+.nav a { font-size: 13px; font-weight: 600; text-decoration: none; color: #52514e; }
+.nav a.active { color: #2a78d6; }
+@media (prefers-color-scheme: dark) {
+.nav { background: #1e1e1c; border-bottom-color: rgba(255,255,255,0.08); }
+.nav a { color: #c3c2b7; }
+.nav a.active { color: #3987e5; }
+}
+.viz-root {
+color-scheme: light;
+--surface-1: #fcfcfb;
+--page-plane: #f5f6f4;
+--text-primary: #0b0b0b;
+--text-secondary: #52514e;
+--text-muted: #898781;
+--gridline: #e1e0d9;
+--baseline: #c3c2b7;
+--border: rgba(11,11,11,0.08);
+--shadow: 0 1px 2px rgba(11,11,11,0.04), 0 8px 24px rgba(11,11,11,0.05);
+--blue: #2a78d6; --blue-tint: #e3edfb;
+--orange: #eb6834; --orange-tint: #fce7de;
+--aqua: #1baf7a; --aqua-tint: #dff5ec;
+--yellow: #eda100; --yellow-tint: #fbecd2;
+--magenta: #e87ba4; --magenta-tint: #fbe6ee;
+--green: #008300; --green-tint: #dcefdc;
+--violet: #4a3aa7; --violet-tint: #e6e3f7;
+--red: #e34948; --red-tint: #fbe2e1;
+--good: #0ca30c;
+--warning: #fab219;
+font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+background: var(--page-plane);
+color: var(--text-primary);
+padding: 0 0 72px;
+box-sizing: border-box;
+min-height: 100%;
+}
+@media (prefers-color-scheme: dark) {
+:root:where(:not([data-theme="light"])) .viz-root {
+color-scheme: dark;
+--surface-1: #1e1e1c;
+--page-plane: #0d0d0d;
+--text-primary: #ffffff;
+--text-secondary: #c3c2b7;
+--text-muted: #8f8d86;
+--gridline: #2c2c2a;
+--baseline: #3a3a37;
+--border: rgba(255,255,255,0.08);
+--shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+--blue: #3987e5; --blue-tint: #1c3355;
+--orange: #d95926; --orange-tint: #3d2417;
+--aqua: #199e70; --aqua-tint: #113329;
+--yellow: #c98500; --yellow-tint: #3a2c0d;
+--magenta: #d55181; --magenta-tint: #3a1f29;
+--green: #1fae1f; --green-tint: #142f14;
+--violet: #9085e9; --violet-tint: #262047;
+--red: #e66767; --red-tint: #3a1f1e;
+}
+}
+:root[data-theme="dark"] .viz-root {
+color-scheme: dark;
+--surface-1: #1e1e1c;
+--page-plane: #0d0d0d;
+--text-primary: #ffffff;
+--text-secondary: #c3c2b7;
+--text-muted: #8f8d86;
+--gridline: #2c2c2a;
+--baseline: #3a3a37;
+--border: rgba(255,255,255,0.08);
+--shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+--blue: #3987e5; --blue-tint: #1c3355;
+--orange: #d95926; --orange-tint: #3d2417;
+--aqua: #199e70; --aqua-tint: #113329;
+--yellow: #c98500; --yellow-tint: #3a2c0d;
+--magenta: #d55181; --magenta-tint: #3a1f29;
+--green: #1fae1f; --green-tint: #142f14;
+--violet: #9085e9; --violet-tint: #262047;
+--red: #e66767; --red-tint: #3a1f1e;
+}
 
-  .hero-band {
-    background: linear-gradient(135deg, var(--blue) 0%, #1e5aa8 100%);
-    padding: 44px 20px 60px;
-    margin-bottom: -36px;
-  }
-  .hero-band .wrap { color: #ffffff; }
-  .eyebrow { font-size: 13px; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 10px; font-weight: 650; }
-  h1 { font-size: 34px; margin: 0 0 8px; font-weight: 700; letter-spacing: -0.01em; }
-  .subtitle { font-size: 15px; color: rgba(255,255,255,0.85); margin: 0; }
+.viz-root * { box-sizing: border-box; }
+.wrap { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
-  .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+.hero-band {
+background: linear-gradient(135deg, var(--blue) 0%, #1e5aa8 100%);
+padding: 44px 20px 60px;
+margin-bottom: -36px;
+position: relative;
+overflow: hidden;
+}
+.hero-band::before {
+content: "";
+position: absolute;
+top: -70px; right: -50px;
+width: 280px; height: 280px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 70%);
+pointer-events: none;
+}
+.hero-band::after {
+content: "";
+position: absolute;
+bottom: -110px; left: 8%;
+width: 200px; height: 200px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(255,255,255,0.10), transparent 70%);
+pointer-events: none;
+}
+.hero-band .wrap { color: #ffffff; position: relative; z-index: 1; }
+.eyebrow { font-size: 13px; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 10px; font-weight: 650; }
+h1 { font-size: 34px; margin: 0 0 8px; font-weight: 700; letter-spacing: -0.01em; }
+.subtitle { font-size: 15px; color: rgba(255,255,255,0.85); margin: 0; }
 
-  .hero-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 34px; position: relative; z-index: 1; }
-  @media (max-width: 780px) { .hero-grid { grid-template-columns: repeat(2, 1fr); } }
-  .stat-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 19px; margin-bottom: 12px; }
-  .stat-label { font-size: 13px; color: var(--text-secondary); margin: 0 0 6px; font-weight: 500; }
-  .stat-value { font-size: 32px; font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; }
-  .stat-delta { font-size: 13px; margin-top: 10px; display: flex; align-items: center; gap: 5px; font-weight: 500; }
-  .stat-delta.good { color: var(--good); }
-  .stat-unit { font-size: 16px; font-weight: 500; color: var(--text-secondary); }
+.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
 
-  h2 { font-size: 19px; font-weight: 700; margin: 0 0 4px; letter-spacing: -0.01em; }
-  .section-sub { font-size: 13px; color: var(--text-secondary); margin: 0 0 18px; }
-  .section { margin-bottom: 36px; }
-  .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-  .section-emoji { font-size: 22px; }
+.hero-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 34px; position: relative; z-index: 1; }
+@media (max-width: 780px) { .hero-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 19px; margin-bottom: 12px; }
+.stat-label { font-size: 13px; color: var(--text-secondary); margin: 0 0 6px; font-weight: 500; }
+.stat-value { font-size: 32px; font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; }
+.stat-delta { font-size: 13px; margin-top: 10px; display: flex; align-items: center; gap: 5px; font-weight: 500; }
+.stat-delta.good { color: var(--good); }
+.stat-unit { font-size: 16px; font-weight: 500; color: var(--text-secondary); }
 
-  .mini-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  @media (max-width: 900px) { .mini-grid { grid-template-columns: repeat(2, 1fr); } }
-  .mini-card { padding: 0; overflow: hidden; }
-  .mini-card .accent-bar { height: 4px; width: 100%; }
-  .mini-card .inner { padding: 16px 16px 12px; }
-  .mini-head { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
-  .mini-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-  .mini-title { font-size: 13px; color: var(--text-secondary); margin: 0; font-weight: 500; }
-  .mini-value { font-size: 23px; font-weight: 700; margin: 6px 0 8px; letter-spacing: -0.01em; }
-  .mini-value .u { font-size: 12px; font-weight: 500; color: var(--text-muted); }
+h2 { font-size: 19px; font-weight: 700; margin: 0 0 4px; letter-spacing: -0.01em; }
+.section-sub { font-size: 13px; color: var(--text-secondary); margin: 0 0 18px; }
+.section { margin-bottom: 36px; }
+.section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.section-emoji { font-size: 22px; }
 
-  .two-col { display: grid; grid-template-columns: 1.3fr 1fr; gap: 14px; }
-  @media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
+.mini-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+@media (max-width: 900px) { .mini-grid { grid-template-columns: repeat(2, 1fr); } }
+.mini-card { padding: 0; overflow: hidden; }
+.mini-card .accent-bar { height: 4px; width: 100%; }
+.mini-card .inner { padding: 16px 16px 12px; }
+.mini-head { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+.mini-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.mini-title { font-size: 13px; color: var(--text-secondary); margin: 0; font-weight: 500; }
+.mini-value { font-size: 23px; font-weight: 700; margin: 6px 0 8px; letter-spacing: -0.01em; }
+.mini-value .u { font-size: 12px; font-weight: 500; color: var(--text-muted); }
 
-  .bar-row { display: flex; align-items: center; gap: 10px; margin: 13px 0; }
-  .bar-icon { font-size: 15px; width: 20px; text-align: center; flex-shrink: 0; }
-  .bar-label { width: 110px; font-size: 13px; color: var(--text-secondary); flex-shrink: 0; font-weight: 500; }
-  .bar-track { flex: 1; height: 22px; position: relative; background: var(--gridline); border-radius: 5px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 5px; position: relative; transition: width .3s; }
-  .bar-value { font-size: 12px; color: var(--text-secondary); margin-left: 4px; white-space: nowrap; width: 26px; font-weight: 600; }
+.two-col { display: grid; grid-template-columns: 1.3fr 1fr; gap: 14px; }
+@media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
 
-  .tooltip { position: absolute; pointer-events: none; background: var(--text-primary); color: var(--surface-1); font-size: 12px; padding: 6px 10px; border-radius: 7px; opacity: 0; transition: opacity .1s; white-space: nowrap; z-index: 5; transform: translate(-50%, -135%); font-weight: 600; }
-  .tooltip.show { opacity: 1; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin: 13px 0; }
+.bar-icon { font-size: 15px; width: 20px; text-align: center; flex-shrink: 0; }
+.bar-label { width: 110px; font-size: 13px; color: var(--text-secondary); flex-shrink: 0; font-weight: 500; }
+.bar-track { flex: 1; height: 22px; position: relative; background: var(--gridline); border-radius: 5px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 5px; position: relative; transition: width .3s; }
+.bar-value { font-size: 12px; color: var(--text-secondary); margin-left: 4px; white-space: nowrap; width: 26px; font-weight: 600; }
 
-  .callout { display: flex; gap: 14px; padding: 20px 22px; border-radius: 16px; background: var(--yellow-tint); border: 1px solid var(--border); }
-  .callout .icon { font-size: 22px; line-height: 1.4; }
-  .callout .title { font-weight: 700; font-size: 15px; margin: 0 0 6px; }
-  .callout p { margin: 0; font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
-  .callout .how-to { margin: 14px 0 0; padding: 0; list-style: none; }
-  .callout .how-to li { display: flex; gap: 10px; padding: 8px 0; border-top: 1px solid var(--border); font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; }
-  .callout .how-to li:first-child { border-top: none; padding-top: 12px; }
-  .callout .how-to .check { color: var(--good); font-weight: 700; flex-shrink: 0; }
-  .callout .how-to b { color: var(--text-primary); font-weight: 650; }
+.tooltip { position: absolute; pointer-events: none; background: var(--text-primary); color: var(--surface-1); font-size: 12px; padding: 6px 10px; border-radius: 7px; opacity: 0; transition: opacity .1s; white-space: nowrap; z-index: 5; transform: translate(-50%, -135%); font-weight: 600; }
+.tooltip.show { opacity: 1; }
 
-  .toggle-btn { background: var(--surface-1); border: 1px solid var(--border); color: var(--text-secondary); font-size: 13px; padding: 9px 14px; border-radius: 9px; cursor: pointer; font-family: inherit; font-weight: 500; box-shadow: var(--shadow); }
-  .toggle-btn:hover { color: var(--text-primary); }
+.callout { display: flex; gap: 14px; padding: 20px 22px; border-radius: 16px; background: var(--yellow-tint); border: 1px solid var(--border); }
+.callout .icon { font-size: 22px; line-height: 1.4; }
+.callout .title { font-weight: 700; font-size: 15px; margin: 0 0 6px; }
+.callout p { margin: 0; font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
+.callout .how-to { margin: 14px 0 0; padding: 0; list-style: none; }
+.callout .how-to li { display: flex; gap: 10px; padding: 8px 0; border-top: 1px solid var(--border); font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; }
+.callout .how-to li:first-child { border-top: none; padding-top: 12px; }
+.callout .how-to .check { color: var(--good); font-weight: 700; flex-shrink: 0; }
+.callout .how-to b { color: var(--text-primary); font-weight: 650; }
 
-  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 14px; }
-  th, td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--gridline); font-variant-numeric: tabular-nums; }
-  th:first-child, td:first-child { text-align: left; }
-  th { color: var(--text-muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
+.toggle-btn { background: var(--surface-1); border: 1px solid var(--border); color: var(--text-secondary); font-size: 13px; padding: 9px 14px; border-radius: 9px; cursor: pointer; font-family: inherit; font-weight: 500; box-shadow: var(--shadow); }
+.toggle-btn:hover { color: var(--text-primary); }
 
-  .top-list { list-style: none; margin: 12px 0 0; padding: 0; }
-  .top-list li { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--gridline); font-size: 13px; }
-  .top-list li:last-child { border-bottom: none; }
-  .top-list .rank { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--blue-tint); color: var(--blue); font-weight: 700; font-size: 12px; margin-right: 10px; flex-shrink: 0; }
-  .top-list .name-wrap { display: flex; align-items: center; }
-  .top-list .name { color: var(--text-primary); font-weight: 600; }
-  .top-list .meta { color: var(--text-muted); display: block; font-size: 12px; margin-top: 1px; }
-  .top-list .km { font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; font-size: 14px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 14px; }
+th, td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--gridline); font-variant-numeric: tabular-nums; }
+th:first-child, td:first-child { text-align: left; }
+th { color: var(--text-muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
 
-  .footer-note { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 8px; }
-  .footer-note a { color: inherit; }
+.top-list { list-style: none; margin: 12px 0 0; padding: 0; }
+.top-list li { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--gridline); font-size: 13px; }
+.top-list li:last-child { border-bottom: none; }
+.top-list .rank { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--blue-tint); color: var(--blue); font-weight: 700; font-size: 12px; margin-right: 10px; flex-shrink: 0; }
+.top-list .name-wrap { display: flex; align-items: center; }
+.top-list .name { color: var(--text-primary); font-weight: 600; }
+.top-list .meta { color: var(--text-muted); display: block; font-size: 12px; margin-top: 1px; }
+.top-list .km { font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; font-size: 14px; }
 
-  .goal-card { display: flex; align-items: center; gap: 22px; padding: 24px 26px; border-radius: 16px; background: linear-gradient(135deg, var(--violet) 0%, #2f2470 100%); color: #fff; margin-bottom: 34px; box-shadow: var(--shadow); flex-wrap: wrap; }
-  .goal-count { text-align: center; flex-shrink: 0; }
-  .goal-count .num { font-size: 44px; font-weight: 700; line-height: 1; }
-  .goal-count .lbl { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; margin-top: 4px; }
-  .goal-info { flex: 1; min-width: 220px; }
-  .goal-info .eyebrow2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; margin: 0 0 4px; font-weight: 650; }
-  .goal-info h3 { font-size: 21px; margin: 0 0 4px; font-weight: 700; }
-  .goal-info p { margin: 0; font-size: 13.5px; opacity: 0.9; }
-  .taper-list { list-style: none; margin: 14px 0 0; padding: 0; }
-  .taper-list li { display: flex; gap: 10px; padding: 9px 0; border-top: 1px solid var(--border); font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; }
-  .taper-list li:first-child { border-top: none; padding-top: 4px; }
-  .taper-list .day { color: var(--violet); font-weight: 700; flex-shrink: 0; width: 78px; font-size: 12.5px; padding-top: 1px; }
-  .taper-list b { color: var(--text-primary); font-weight: 650; }
+.footer-note { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+.footer-note a { color: inherit; }
+
+.goal-card { display: flex; align-items: center; gap: 22px; padding: 24px 26px; border-radius: 16px; background: linear-gradient(135deg, var(--violet) 0%, #2f2470 100%); color: #fff; margin-bottom: 34px; box-shadow: var(--shadow); flex-wrap: wrap; }
+.goal-count { text-align: center; flex-shrink: 0; }
+.goal-count .num { font-size: 44px; font-weight: 700; line-height: 1; }
+.goal-count .lbl { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; margin-top: 4px; }
+.goal-info { flex: 1; min-width: 220px; }
+.goal-info .eyebrow2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; margin: 0 0 4px; font-weight: 650; }
+.goal-info h3 { font-size: 21px; margin: 0 0 4px; font-weight: 700; }
+.goal-info p { margin: 0; font-size: 13.5px; opacity: 0.9; }
+.taper-list { list-style: none; margin: 14px 0 0; padding: 0; }
+.taper-list li { display: flex; gap: 10px; padding: 9px 0; border-top: 1px solid var(--border); font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; }
+.taper-list li:first-child { border-top: none; padding-top: 4px; }
+.taper-list .day { color: var(--violet); font-weight: 700; flex-shrink: 0; width: 78px; font-size: 12.5px; padding-top: 1px; }
+.taper-list b { color: var(--text-primary); font-weight: 650; }
 </style>
 </head>
 <body>
+<div class="brand-bar"><div class="wrap">
+<a class="handle" href="https://instagram.com/trota_conmigo" target="_blank" rel="noopener">
+<span class="brand-mark">🏃‍♂️</span><span>@trota_conmigo</span>
+</a>
+<span class="brand-tagline">Entrenamientos y carreras · sincronizado desde Garmin</span>
+</div></div>
 <div class="nav"><div class="wrap">
-  <a href="index.html">← Panel</a>
-  <a href="mi-ano-en-garmin.html" class="active">Mi año en Garmin</a>
-  <a href="objetivos-de-carrera.html">Objetivos de carrera</a>
+<a href="index.html">← Panel</a>
+<a href="mi-ano-en-garmin.html" class="active">Mi año en Garmin</a>
+<a href="objetivos-de-carrera.html">Objetivos de carrera</a>
 </div></div>
 <div class="viz-root">
-  <div class="hero-band">
-    <div class="wrap">
-      <p class="eyebrow">⌚ Garmin · sincronización automática 2x al día</p>
-      <h1>Tu año en datos 🏃‍♂️</h1>
-      <p class="subtitle" id="subtitleText">Enero – Septiembre 2026 · 250 días registrados · 160 actividades</p>
-    </div>
-  </div>
+<div class="hero-band">
+<div class="wrap">
+<p class="eyebrow">⌚ Garmin · sincronización automática 2x al día</p>
+<h1>Tu año en datos 🏃‍♂️</h1>
+<p class="subtitle" id="subtitleText">Enero – Septiembre 2026 · 250 días registrados · 160 actividades</p>
+</div>
+</div>
 
-  <div class="wrap">
-    <div class="hero-grid">
-      <div class="card">
-        <div class="stat-icon" style="background:var(--blue-tint); color:var(--blue);">📏</div>
-        <p class="stat-label">Distancia total recorrida</p>
-        <div class="stat-value"><span id="statKm">955</span> <span class="stat-unit">km</span></div>
-      </div>
-      <div class="card">
-        <div class="stat-icon" style="background:var(--orange-tint); color:var(--orange);">⏱️</div>
-        <p class="stat-label">Horas entrenando</p>
-        <div class="stat-value"><span id="statHours">150</span> <span class="stat-unit">h</span></div>
-      </div>
-      <div class="card">
-        <div class="stat-icon" style="background:var(--aqua-tint); color:var(--aqua);">🏋️</div>
-        <p class="stat-label">Actividades registradas</p>
-        <div class="stat-value" id="statActivities">160</div>
-      </div>
-      <div class="card">
-        <div class="stat-icon" style="background:var(--red-tint); color:var(--red);">❤️</div>
-        <p class="stat-label" id="statRHRLabel">FC en reposo (ene → sep)</p>
-        <div class="stat-value"><span id="statRHR">39.1</span> <span class="stat-unit">bpm</span></div>
-        <div class="stat-delta good" id="statRHRDelta">▼ 1.7 bpm — mejor forma física</div>
-      </div>
-    </div>
+<div class="wrap">
+<div class="hero-grid">
+<div class="card" style="border-top:4px solid var(--blue);">
+<div class="stat-icon" style="background:var(--blue-tint); color:var(--blue);">📏</div>
+<p class="stat-label">Distancia total recorrida</p>
+<div class="stat-value"><span id="statKm">955</span> <span class="stat-unit">km</span></div>
+</div>
+<div class="card" style="border-top:4px solid var(--orange);">
+<div class="stat-icon" style="background:var(--orange-tint); color:var(--orange);">⏱️</div>
+<p class="stat-label">Horas entrenando</p>
+<div class="stat-value"><span id="statHours">150</span> <span class="stat-unit">h</span></div>
+</div>
+<div class="card" style="border-top:4px solid var(--aqua);">
+<div class="stat-icon" style="background:var(--aqua-tint); color:var(--aqua);">🏋️</div>
+<p class="stat-label">Actividades registradas</p>
+<div class="stat-value" id="statActivities">160</div>
+</div>
+<div class="card" style="border-top:4px solid var(--red);">
+<div class="stat-icon" style="background:var(--red-tint); color:var(--red);">❤️</div>
+<p class="stat-label" id="statRHRLabel">FC en reposo (ene → sep)</p>
+<div class="stat-value"><span id="statRHR">39.1</span> <span class="stat-unit">bpm</span></div>
+<div class="stat-delta good" id="statRHRDelta">▼ 1.7 bpm — mejor forma física</div>
+</div>
+</div>
 
-    <div class="goal-card">
-      <div class="goal-count">
-        <div class="num" id="goalDays">—</div>
-        <div class="lbl" id="goalDaysLbl">días</div>
-      </div>
-      <div class="goal-info">
-        <p class="eyebrow2">🎯 Próximo objetivo</p>
-        <h3>Media maratón — Mundial de Copenhague</h3>
-        <p>Domingo 20 de septiembre de 2026 · World Athletics Road Running Championships</p>
-      </div>
-    </div>
+<div class="goal-card">
+<div class="goal-count">
+<div class="num" id="goalDays">—</div>
+<div class="lbl" id="goalDaysLbl">días</div>
+</div>
+<div class="goal-info">
+<p class="eyebrow2">🎯 Próximo objetivo</p>
+<h3>Media maratón — Mundial de Copenhague</h3>
+<p>Domingo 20 de septiembre de 2026 · World Athletics Road Running Championships</p>
+</div>
+</div>
 
-    <div class="section">
-      <div class="callout" style="background:var(--violet-tint); margin-bottom:0;">
-        <span class="icon">🏁</span>
-        <div>
-          <p class="title">Plan de puesta a punto: solo quedan <span id="taperTitleDays">12</span> días</p>
-          <p>Con los 30K del 5 de sep todavía en el cuerpo y la carrera el 20 de sep, tu semana de descarga y el tapering de Copenhague son literalmente la misma cosa — no hay que elegir entre recuperar y afinar, se hace a la vez. El objetivo estos días no es ganar más fondo (ya no da tiempo ni falta que hace), es llegar a la línea de salida con el HRV y el sueño recuperados.</p>
-          <ul class="taper-list">
-            <li><span class="day">Días 1–5</span><span>(hasta el 13 sep) — <b>volumen bajo, todo suave.</b> 3-4 rodajes cortos y fáciles (30-40 min) + 1-2 días de descanso total. Nada de series ni ritmos fuertes: el cuerpo está terminando de absorber los 30K.</span></li>
-            <li><span class="day">Días 6–9</span><span>(14-17 sep) — <b>reactiva la pierna, no la fatigues.</b> 2 sesiones cortas con algún tramo a ritmo de media (4-6 x 3 min) para no perder la sensación de ritmo, siempre con mucho descanso entre series.</span></li>
-            <li><span class="day">Días 10–12</span><span>(18-19 sep) — <b>descanso activo total.</b> Un trote muy suave de 15-20 min el día 18 como mucho, y descanso completo la víspera. Duerme tus 7.5-8 h estas noches por encima de todo.</span></li>
-            <li><span class="day">Día 0</span><span>(20 sep) — <b>carrera.</b> Desayuno probado en entrenamientos, nada nuevo el día de la prueba, y sal 10-15 seg/km más lento que tu ritmo objetivo en el primer km — es donde casi todo el mundo se pasa.</span></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+<div class="section">
+<div class="callout" style="background:var(--violet-tint); margin-bottom:0;">
+<span class="icon">🏁</span>
+<div>
+<p class="title">Plan de puesta a punto: solo quedan <span id="taperTitleDays">12</span> días</p>
+<p>Con los 30K del 5 de sep todavía en el cuerpo y la carrera el 20 de sep, tu semana de descarga y el tapering de Copenhague son literalmente la misma cosa — no hay que elegir entre recuperar y afinar, se hace a la vez. El objetivo estos días no es ganar más fondo (ya no da tiempo ni falta que hace), es llegar a la línea de salida con el HRV y el sueño recuperados.</p>
+<ul class="taper-list">
+<li><span class="day">Días 1–5</span><span>(hasta el 13 sep) — <b>volumen bajo, todo suave.</b> 3-4 rodajes cortos y fáciles (30-40 min) + 1-2 días de descanso total. Nada de series ni ritmos fuertes: el cuerpo está terminando de absorber los 30K.</span></li>
+<li><span class="day">Días 6–9</span><span>(14-17 sep) — <b>reactiva la pierna, no la fatigues.</b> 2 sesiones cortas con algún tramo a ritmo de media (4-6 x 3 min) para no perder la sensación de ritmo, siempre con mucho descanso entre series.</span></li>
+<li><span class="day">Días 10–12</span><span>(18-19 sep) — <b>descanso activo total.</b> Un trote muy suave de 15-20 min el día 18 como mucho, y descanso completo la víspera. Duerme tus 7.5-8 h estas noches por encima de todo.</span></li>
+<li><span class="day">Día 0</span><span>(20 sep) — <b>carrera.</b> Desayuno probado en entrenamientos, nada nuevo el día de la prueba, y sal 10-15 seg/km más lento que tu ritmo objetivo en el primer km — es donde casi todo el mundo se pasa.</span></li>
+</ul>
+</div>
+</div>
+</div>
 
-    <div class="section">
-      <div class="section-head"><span class="section-emoji">📈</span><h2>Evolución mensual</h2></div>
-      <p class="section-sub">Media de cada métrica por mes. Pasa el cursor sobre un punto para ver el valor exacto.</p>
-      <div class="mini-grid" id="miniGrid"></div>
-      <div style="margin-top:14px;">
-        <button class="toggle-btn" id="tableToggle">📋 Ver tabla de datos completa</button>
-      </div>
-      <div class="card" id="dataTable" style="display:none; margin-top:12px; overflow-x:auto;">
-        <table>
-          <thead>
-            <tr><th>Mes</th><th>FC reposo</th><th>HRV</th><th>Sueño (h)</th><th>Sueño (score)</th><th>Estrés</th><th>Pasos</th><th>Readiness</th></tr>
-          </thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-      </div>
-    </div>
+<div class="section">
+<div class="section-head"><span class="section-emoji">📈</span><h2>Evolución mensual</h2></div>
+<p class="section-sub">Media de cada métrica por mes. Pasa el cursor sobre un punto para ver el valor exacto.</p>
+<div class="mini-grid" id="miniGrid"></div>
+<div style="margin-top:14px;">
+<button class="toggle-btn" id="tableToggle">📋 Ver tabla de datos completa</button>
+</div>
+<div class="card" id="dataTable" style="display:none; margin-top:12px; overflow-x:auto;">
+<table>
+<thead>
+<tr><th>Mes</th><th>FC reposo</th><th>HRV</th><th>Sueño (h)</th><th>Sueño (score)</th><th>Estrés</th><th>Pasos</th><th>Readiness</th></tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+</div>
+</div>
 
-    <div class="section two-col">
-      <div class="card">
-        <div class="section-head"><span class="section-emoji">🏃</span><h2>Tipos de actividad</h2></div>
-        <p class="section-sub" id="typeSectionSub">160 actividades en total, enero–septiembre</p>
-        <div id="typeBars"></div>
-      </div>
-      <div class="card">
-        <div class="section-head"><span class="section-emoji">🏆</span><h2>Tus 5 distancias más largas</h2></div>
-        <p class="section-sub">Carreras destacadas del año</p>
-        <ul class="top-list" id="topList"></ul>
-      </div>
-    </div>
+<div class="section two-col">
+<div class="card">
+<div class="section-head"><span class="section-emoji">🏃</span><h2>Tipos de actividad</h2></div>
+<p class="section-sub" id="typeSectionSub">160 actividades en total, enero–septiembre</p>
+<div id="typeBars"></div>
+</div>
+<div class="card">
+<div class="section-head"><span class="section-emoji">🏆</span><h2>Tus 5 distancias más largas</h2></div>
+<p class="section-sub">Carreras destacadas del año</p>
+<ul class="top-list" id="topList"></ul>
+</div>
+</div>
 
-    <div class="section">
-      <div class="section-head"><span class="section-emoji">🔎</span><h2>Últimos 7 días (<span id="last7RangeLabel">2–8 sep</span>) vs. media del año</h2></div>
-      <div class="hero-grid" id="last7Grid" style="margin-bottom:0;"></div>
-    </div>
+<div class="section">
+<div class="section-head"><span class="section-emoji">🔎</span><h2>Últimos 7 días (<span id="last7RangeLabel">2–8 sep</span>) vs. media del año</h2></div>
+<div class="hero-grid" id="last7Grid" style="margin-bottom:0;"></div>
+</div>
 
-    <div class="section">
-      <div class="callout">
-        <span class="icon">⚠️</span>
-        <div>
-          <p class="title">Para reforzar: el sueño durante los picos de carga</p>
-          <p>En agosto —tu segundo mes de mayor volumen de entrenamiento (24 actividades)— dormiste de media solo 6.8 h, el mínimo del año, justo cuando el cuerpo más recuperación necesitaba. Coincide con la caída de tu HRV desde los 105 ms de febrero hasta ~90 ms en agosto-septiembre. Ahora que acabas de completar tu distancia más larga (30 km, 5 de sep), es buen momento para una semana de descarga real priorizando las 7.5–8 h de sueño que sí conseguías a principios de año.</p>
-          <ul class="how-to">
-            <li><span class="check">✓</span><span><b>Esta semana, entrena en modo descarga:</b> corta el volumen a la mitad y quita toda intensidad — solo rodajes suaves o descanso activo. El cuerpo todavía está pagando los 30K del 5 de sep.</span></li>
-            <li><span class="check">✓</span><span><b>Fija una hora de acostarte</b> que te dé 7.5–8 h antes de la alarma, y ponla también los findes — la irregularidad de horario cuesta tanto sueño profundo como dormir poco.</span></li>
-            <li><span class="check">✓</span><span><b>Corta pantallas 30–45 min antes de dormir</b> (o usa modo noche/luz cálida) — es lo que más rápido sube el HRV nocturno en la mayoría de gente.</span></li>
-            <li><span class="check">✓</span><span><b>Luz natural nada más levantarte</b> (10 min al aire libre) ayuda a fijar el ritmo circadiano y a llegar con más sueño a la hora de dormir.</span></li>
-            <li><span class="check">✓</span><span><b>Vigila el HRV y el training readiness en el panel</b> los próximos 7–10 días: si vuelven a subir hacia tus valores de invierno (HRV ~100, readiness >60), es la señal de que ya puedes retomar cargas altas.</span></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+<div class="section">
+<div class="callout">
+<span class="icon">⚠️</span>
+<div>
+<p class="title">Para reforzar: el sueño durante los picos de carga</p>
+<p>En agosto —tu segundo mes de mayor volumen de entrenamiento (24 actividades)— dormiste de media solo 6.8 h, el mínimo del año, justo cuando el cuerpo más recuperación necesitaba. Coincide con la caída de tu HRV desde los 105 ms de febrero hasta ~90 ms en agosto-septiembre. Ahora que acabas de completar tu distancia más larga (30 km, 5 de sep), es buen momento para una semana de descarga real priorizando las 7.5–8 h de sueño que sí conseguías a principios de año.</p>
+<ul class="how-to">
+<li><span class="check">✓</span><span><b>Esta semana, entrena en modo descarga:</b> corta el volumen a la mitad y quita toda intensidad — solo rodajes suaves o descanso activo. El cuerpo todavía está pagando los 30K del 5 de sep.</span></li>
+<li><span class="check">✓</span><span><b>Fija una hora de acostarte</b> que te dé 7.5–8 h antes de la alarma, y ponla también los findes — la irregularidad de horario cuesta tanto sueño profundo como dormir poco.</span></li>
+<li><span class="check">✓</span><span><b>Corta pantallas 30–45 min antes de dormir</b> (o usa modo noche/luz cálida) — es lo que más rápido sube el HRV nocturno en la mayoría de gente.</span></li>
+<li><span class="check">✓</span><span><b>Luz natural nada más levantarte</b> (10 min al aire libre) ayuda a fijar el ritmo circadiano y a llegar con más sueño a la hora de dormir.</span></li>
+<li><span class="check">✓</span><span><b>Vigila el HRV y el training readiness en el panel</b> los próximos 7–10 días: si vuelven a subir hacia tus valores de invierno (HRV ~100, readiness >60), es la señal de que ya puedes retomar cargas altas.</span></li>
+</ul>
+</div>
+</div>
+</div>
 
-    <p class="footer-note">Datos sincronizados automáticamente desde Garmin Connect · se actualiza dos veces al día</p>
-  </div>
+<p class="footer-note">Datos sincronizados automáticamente desde Garmin Connect · se actualiza dos veces al día</p>
+</div>
 </div>
 
 <script type="application/json" id="dash-data">
@@ -331,7 +365,7 @@
       39.3,
       37.3,
       37.3,
-      39.1
+      38.9
     ],
     "hrv": [
       95.8,
@@ -342,7 +376,7 @@
       101.6,
       98.8,
       90.7,
-      90.3
+      90.4
     ],
     "sleepH": [
       7.5,
@@ -375,7 +409,7 @@
       21.3,
       18.1,
       18.3,
-      19.2
+      17.9
     ],
     "steps": [
       13810,
@@ -386,7 +420,7 @@
       10830,
       11214,
       12932,
-      11151
+      10508
     ],
     "readiness": [
       43.9,
@@ -397,7 +431,7 @@
       52.3,
       56.9,
       40.1,
-      61.9
+      62.6
     ]
   },
   "typeTotals": [
@@ -427,7 +461,7 @@
     },
     {
       "label": "Cinta de correr",
-      "count": 10,
+      "count": 11,
       "color": "magenta",
       "icon": "🎽"
     },
@@ -466,18 +500,18 @@
     }
   ],
   "last7": {
-    "rhr": 38.8,
-    "hrv": 85.2,
+    "rhr": 38.6,
+    "hrv": 86.2,
     "sleepH": 7.9,
-    "readiness": 68.8
+    "readiness": 68.7
   },
   "stats": {
-    "totalKm": 955,
-    "totalHours": 150,
-    "activitiesCount": 160,
+    "totalKm": 960,
+    "totalHours": 151,
+    "activitiesCount": 161,
     "daysRegistered": 251,
-    "rhrNow": 39.1,
-    "rhrDelta": 1.7,
+    "rhrNow": 38.9,
+    "rhrDelta": 1.9,
     "monthRangeLabel": "Enero – Septiembre 2026",
     "monthRangeShort": "enero–septiembre",
     "last7RangeLabel": "3–9 sep"
@@ -486,217 +520,218 @@
 </script>
 <script>
 (function () {
-  const DATA = JSON.parse(document.getElementById("dash-data").textContent);
-  const monthLabels = DATA.monthLabels;
-  const monthly = DATA.monthly;
-  const typeTotals = DATA.typeTotals;
-  const topActivities = DATA.topActivities;
-  const last7 = DATA.last7;
-  const stats = DATA.stats;
+const DATA = JSON.parse(document.getElementById("dash-data").textContent);
+const monthLabels = DATA.monthLabels;
+const monthly = DATA.monthly;
+const typeTotals = DATA.typeTotals;
+const topActivities = DATA.topActivities;
+const last7 = DATA.last7;
+const stats = DATA.stats;
 
-  // ---- header stats (regenerated from garmin/data.json) ----
-  document.getElementById("subtitleText").textContent = `${stats.monthRangeLabel} · ${stats.daysRegistered} días registrados · ${stats.activitiesCount} actividades`;
-  document.getElementById("statKm").textContent = stats.totalKm;
-  document.getElementById("statHours").textContent = stats.totalHours;
-  document.getElementById("statActivities").textContent = stats.activitiesCount;
-  document.getElementById("statRHR").textContent = stats.rhrNow;
-  document.getElementById("statRHRDelta").textContent = stats.rhrDelta >= 0
-    ? `▼ ${stats.rhrDelta} bpm — mejor forma física`
-    : `▲ ${Math.abs(stats.rhrDelta)} bpm — peor forma física`;
-  document.getElementById("typeSectionSub").textContent = `${stats.activitiesCount} actividades en total, ${stats.monthRangeShort}`;
-  document.getElementById("last7RangeLabel").textContent = stats.last7RangeLabel;
+// ---- header stats (regenerated from garmin/data.json) ----
+document.getElementById("subtitleText").textContent = `${stats.monthRangeLabel} · ${stats.daysRegistered} días registrados · ${stats.activitiesCount} actividades`;
+document.getElementById("statKm").textContent = stats.totalKm;
+document.getElementById("statHours").textContent = stats.totalHours;
+document.getElementById("statActivities").textContent = stats.activitiesCount;
+document.getElementById("statRHR").textContent = stats.rhrNow;
+document.getElementById("statRHRDelta").textContent = stats.rhrDelta >= 0
+? `▼ ${stats.rhrDelta} bpm — mejor forma física`
+: `▲ ${Math.abs(stats.rhrDelta)} bpm — peor forma física`;
+document.getElementById("typeSectionSub").textContent = `${stats.activitiesCount} actividades en total, ${stats.monthRangeShort}`;
+document.getElementById("last7RangeLabel").textContent = stats.last7RangeLabel;
 
-  // ---- goal countdown ----
-  (function () {
-    const raceDate = new Date("2026-09-20T09:00:00");
-    const now = new Date();
-    const msPerDay = 24 * 60 * 60 * 1000;
-    const diffDays = Math.ceil((raceDate - now) / msPerDay);
-    const numEl = document.getElementById("goalDays");
-    const lblEl = document.getElementById("goalDaysLbl");
-    const taperEl = document.getElementById("taperTitleDays");
-    if (diffDays > 1) { numEl.textContent = diffDays; lblEl.textContent = "días"; if (taperEl) taperEl.textContent = diffDays; }
-    else if (diffDays === 1) { numEl.textContent = "1"; lblEl.textContent = "día — ¡mañana!"; if (taperEl) taperEl.textContent = "1"; }
-    else if (diffDays === 0) { numEl.textContent = "🏁"; lblEl.textContent = "¡hoy es el día!"; }
-    else { numEl.textContent = "✓"; lblEl.textContent = "carrera completada"; }
-  })();
+// ---- goal countdown ----
+(function () {
+const raceDate = new Date("2026-09-20T09:00:00");
+const now = new Date();
+const msPerDay = 24 * 60 * 60 * 1000;
+const diffDays = Math.ceil((raceDate - now) / msPerDay);
+const numEl = document.getElementById("goalDays");
+const lblEl = document.getElementById("goalDaysLbl");
+const taperEl = document.getElementById("taperTitleDays");
+if (diffDays > 1) { numEl.textContent = diffDays; lblEl.textContent = "días"; if (taperEl) taperEl.textContent = diffDays; }
+else if (diffDays === 1) { numEl.textContent = "1"; lblEl.textContent = "día — ¡mañana!"; if (taperEl) taperEl.textContent = "1"; }
+else if (diffDays === 0) { numEl.textContent = "🏁"; lblEl.textContent = "¡hoy es el día!"; }
+else { numEl.textContent = "✓"; lblEl.textContent = "carrera completada"; }
+})();
 
-  function avg(a){ return a.reduce((x,y)=>x+y,0)/a.length; }
-  function round(x,d=1){ const p=Math.pow(10,d); return Math.round(x*p)/p; }
-  const yearAvg = { rhr: avg(monthly.rhr), hrv: avg(monthly.hrv), sleepH: avg(monthly.sleepH), readiness: avg(monthly.readiness) };
+function avg(a){ return a.reduce((x,y)=>x+y,0)/a.length; }
+function round(x,d=1){ const p=Math.pow(10,d); return Math.round(x*p)/p; }
+const yearAvg = { rhr: avg(monthly.rhr), hrv: avg(monthly.hrv), sleepH: avg(monthly.sleepH), readiness: avg(monthly.readiness) };
 
-  // ---- mini line charts ----
-  const metrics = [
-    { key: "rhr", title: "FC en reposo", unit: "bpm", color: "blue", icon: "❤️", fmt: v => round(v,1) },
-    { key: "hrv", title: "HRV nocturno", unit: "ms", color: "aqua", icon: "💫", fmt: v => round(v,1) },
-    { key: "sleepH", title: "Horas de sueño", unit: "h", color: "violet", icon: "🌙", fmt: v => round(v,1) },
-    { key: "stress", title: "Estrés medio", unit: "", color: "orange", icon: "🔥", fmt: v => round(v,1) },
-  ];
+// ---- mini line charts ----
+const metrics = [
+{ key: "rhr", title: "FC en reposo", unit: "bpm", color: "blue", icon: "❤️", fmt: v => round(v,1) },
+{ key: "hrv", title: "HRV nocturno", unit: "ms", color: "aqua", icon: "💫", fmt: v => round(v,1) },
+{ key: "sleepH", title: "Horas de sueño", unit: "h", color: "violet", icon: "🌙", fmt: v => round(v,1) },
+{ key: "stress", title: "Estrés medio", unit: "", color: "orange", icon: "🔥", fmt: v => round(v,1) },
+];
 
-  const miniGrid = document.getElementById("miniGrid");
-  metrics.forEach(m => {
-    const values = monthly[m.key];
-    const card = document.createElement("div");
-    card.className = "card mini-card";
-    const last = values[values.length-1];
-    card.innerHTML = `<div class="accent-bar" style="background:var(--${m.color});"></div>
-      <div class="inner">
-        <div class="mini-head"><span class="mini-dot" style="background:var(--${m.color});"></span><p class="mini-title">${m.icon} ${m.title}</p></div>
-        <div class="mini-value">${m.fmt(last)} <span class="u">${m.unit} · sep</span></div>
-        <div class="chart-holder" style="position:relative;"></div>
-      </div>`;
-    miniGrid.appendChild(card);
-    drawLineChart(card.querySelector(".chart-holder"), values, monthLabels, m.unit, m.fmt, m.color);
-  });
+const miniGrid = document.getElementById("miniGrid");
+metrics.forEach(m => {
+const values = monthly[m.key];
+const card = document.createElement("div");
+card.className = "card mini-card";
+const last = values[values.length-1];
+card.innerHTML = `<div class="accent-bar" style="background:var(--${m.color});"></div>
+<div class="inner">
+<div class="mini-head"><span class="mini-dot" style="background:var(--${m.color});"></span><p class="mini-title">${m.icon} ${m.title}</p></div>
+<div class="mini-value">${m.fmt(last)} <span class="u">${m.unit} · sep</span></div>
+<div class="chart-holder" style="position:relative;"></div>
+</div>`;
+miniGrid.appendChild(card);
+drawLineChart(card.querySelector(".chart-holder"), values, monthLabels, m.unit, m.fmt, m.color);
+});
 
-  function drawLineChart(container, values, labels, unit, fmt, colorVar) {
-    const w = 240, h = 92, padL = 4, padR = 4, padT = 10, padB = 18;
-    const min = Math.min(...values), max = Math.max(...values);
-    const range = (max - min) || 1;
-    const x = i => padL + (i / (values.length - 1)) * (w - padL - padR);
-    const y = v => padT + (1 - (v - min) / range) * (h - padT - padB);
-    const color = `var(--${colorVar})`;
+function drawLineChart(container, values, labels, unit, fmt, colorVar) {
+const w = 240, h = 92, padL = 4, padR = 4, padT = 10, padB = 18;
+const min = Math.min(...values), max = Math.max(...values);
+const range = (max - min) || 1;
+const x = i => padL + (i / (values.length - 1)) * (w - padL - padR);
+const y = v => padT + (1 - (v - min) / range) * (h - padT - padB);
+const color = `var(--${colorVar})`;
 
-    const svgNS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(svgNS, "svg");
-    svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
-    svg.setAttribute("width", "100%");
-    svg.style.display = "block";
-    svg.style.overflow = "visible";
+const svgNS = "http://www.w3.org/2000/svg";
+const svg = document.createElementNS(svgNS, "svg");
+svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+svg.setAttribute("width", "100%");
+svg.style.display = "block";
+svg.style.overflow = "visible";
 
-    // gridlines (2 hairlines)
-    [0.33, 0.66].forEach(f => {
-      const gl = document.createElementNS(svgNS, "line");
-      const gy = padT + f * (h - padT - padB);
-      gl.setAttribute("x1", padL); gl.setAttribute("x2", w - padR);
-      gl.setAttribute("y1", gy); gl.setAttribute("y2", gy);
-      gl.setAttribute("stroke", "var(--gridline)"); gl.setAttribute("stroke-width", "1");
-      svg.appendChild(gl);
-    });
+// gridlines (2 hairlines)
+[0.33, 0.66].forEach(f => {
+const gl = document.createElementNS(svgNS, "line");
+const gy = padT + f * (h - padT - padB);
+gl.setAttribute("x1", padL); gl.setAttribute("x2", w - padR);
+gl.setAttribute("y1", gy); gl.setAttribute("y2", gy);
+gl.setAttribute("stroke", "var(--gridline)"); gl.setAttribute("stroke-width", "1");
+svg.appendChild(gl);
+});
 
-    // area fill
-    const areaD = `M ${x(0)} ${h - padB} ` + values.map((v,i) => `L ${x(i)} ${y(v)}`).join(" ") + ` L ${x(values.length-1)} ${h - padB} Z`;
-    const area = document.createElementNS(svgNS, "path");
-    area.setAttribute("d", areaD);
-    area.setAttribute("fill", color);
-    area.setAttribute("opacity", "0.12");
-    svg.appendChild(area);
+// area fill
+const areaD = `M ${x(0)} ${h - padB} ` + values.map((v,i) => `L ${x(i)} ${y(v)}`).join(" ") + ` L ${x(values.length-1)} ${h - padB} Z`;
+const area = document.createElementNS(svgNS, "path");
+area.setAttribute("d", areaD);
+area.setAttribute("fill", color);
+area.setAttribute("opacity", "0.12");
+svg.appendChild(area);
 
-    // baseline
-    const base = document.createElementNS(svgNS, "line");
-    base.setAttribute("x1", padL); base.setAttribute("x2", w - padR);
-    base.setAttribute("y1", h - padB); base.setAttribute("y2", h - padB);
-    base.setAttribute("stroke", "var(--baseline)"); base.setAttribute("stroke-width", "1");
-    svg.appendChild(base);
+// baseline
+const base = document.createElementNS(svgNS, "line");
+base.setAttribute("x1", padL); base.setAttribute("x2", w - padR);
+base.setAttribute("y1", h - padB); base.setAttribute("y2", h - padB);
+base.setAttribute("stroke", "var(--baseline)"); base.setAttribute("stroke-width", "1");
+svg.appendChild(base);
 
-    // line path
-    const pathD = values.map((v,i) => `${i===0 ? "M" : "L"} ${x(i)} ${y(v)}`).join(" ");
-    const path = document.createElementNS(svgNS, "path");
-    path.setAttribute("d", pathD);
-    path.setAttribute("fill", "none");
-    path.setAttribute("stroke", color);
-    path.setAttribute("stroke-width", "2.5");
-    path.setAttribute("stroke-linejoin", "round");
-    path.setAttribute("stroke-linecap", "round");
-    svg.appendChild(path);
+// line path
+const pathD = values.map((v,i) => `${i===0 ? "M" : "L"} ${x(i)} ${y(v)}`).join(" ");
+const path = document.createElementNS(svgNS, "path");
+path.setAttribute("d", pathD);
+path.setAttribute("fill", "none");
+path.setAttribute("stroke", color);
+path.setAttribute("stroke-width", "2.5");
+path.setAttribute("stroke-linejoin", "round");
+path.setAttribute("stroke-linecap", "round");
+svg.appendChild(path);
 
-    const tooltip = document.createElement("div");
-    tooltip.className = "tooltip";
-    container.appendChild(tooltip);
+const tooltip = document.createElement("div");
+tooltip.className = "tooltip";
+container.appendChild(tooltip);
 
-    values.forEach((v,i) => {
-      const dot = document.createElementNS(svgNS, "circle");
-      dot.setAttribute("cx", x(i)); dot.setAttribute("cy", y(v));
-      dot.setAttribute("r", i === values.length-1 ? 4.5 : 3);
-      dot.setAttribute("fill", color);
-      dot.setAttribute("stroke", "var(--surface-1)");
-      dot.setAttribute("stroke-width", "2");
-      dot.style.cursor = "pointer";
-      dot.addEventListener("mouseenter", () => {
-        tooltip.textContent = `${labels[i]}: ${fmt(v)}${unit ? " " + unit : ""}`;
-        const pct = x(i) / w * 100;
-        tooltip.style.left = pct + "%";
-        tooltip.style.top = (y(v) / h * 100) + "%";
-        tooltip.classList.add("show");
-      });
-      dot.addEventListener("mouseleave", () => tooltip.classList.remove("show"));
-      svg.appendChild(dot);
-    });
+values.forEach((v,i) => {
+const dot = document.createElementNS(svgNS, "circle");
+dot.setAttribute("cx", x(i)); dot.setAttribute("cy", y(v));
+dot.setAttribute("r", i === values.length-1 ? 4.5 : 3);
+dot.setAttribute("fill", color);
+dot.setAttribute("stroke", "var(--surface-1)");
+dot.setAttribute("stroke-width", "2");
+dot.style.cursor = "pointer";
+dot.addEventListener("mouseenter", () => {
+tooltip.textContent = `${labels[i]}: ${fmt(v)}${unit ? " " + unit : ""}`;
+const pct = x(i) / w * 100;
+tooltip.style.left = pct + "%";
+tooltip.style.top = (y(v) / h * 100) + "%";
+tooltip.classList.add("show");
+});
+dot.addEventListener("mouseleave", () => tooltip.classList.remove("show"));
+svg.appendChild(dot);
+});
 
-    const lbl1 = document.createElementNS(svgNS, "text");
-    lbl1.textContent = labels[0];
-    lbl1.setAttribute("x", padL); lbl1.setAttribute("y", h - 4);
-    lbl1.setAttribute("font-size", "9"); lbl1.setAttribute("fill", "var(--text-muted)");
-    svg.appendChild(lbl1);
-    const lbl2 = document.createElementNS(svgNS, "text");
-    lbl2.textContent = labels[labels.length-1];
-    lbl2.setAttribute("x", w - padR); lbl2.setAttribute("y", h - 4);
-    lbl2.setAttribute("text-anchor", "end");
-    lbl2.setAttribute("font-size", "9"); lbl2.setAttribute("fill", "var(--text-muted)");
-    svg.appendChild(lbl2);
+const lbl1 = document.createElementNS(svgNS, "text");
+lbl1.textContent = labels[0];
+lbl1.setAttribute("x", padL); lbl1.setAttribute("y", h - 4);
+lbl1.setAttribute("font-size", "9"); lbl1.setAttribute("fill", "var(--text-muted)");
+svg.appendChild(lbl1);
+const lbl2 = document.createElementNS(svgNS, "text");
+lbl2.textContent = labels[labels.length-1];
+lbl2.setAttribute("x", w - padR); lbl2.setAttribute("y", h - 4);
+lbl2.setAttribute("text-anchor", "end");
+lbl2.setAttribute("font-size", "9"); lbl2.setAttribute("fill", "var(--text-muted)");
+svg.appendChild(lbl2);
 
-    container.appendChild(svg);
-  }
+container.appendChild(svg);
+}
 
-  // ---- activity type bars ----
-  const typeBars = document.getElementById("typeBars");
-  const maxCount = Math.max(...typeTotals.map(t => t.count));
-  typeTotals.forEach(t => {
-    const row = document.createElement("div");
-    row.className = "bar-row";
-    const pct = (t.count / maxCount) * 100;
-    row.innerHTML = `<span class="bar-icon">${t.icon}</span>
-      <div class="bar-label">${t.label}</div>
-      <div class="bar-track"><div class="bar-fill" style="width:${pct}%; background:var(--${t.color});"></div></div>
-      <div class="bar-value">${t.count}</div>`;
-    typeBars.appendChild(row);
-  });
+// ---- activity type bars ----
+const typeBars = document.getElementById("typeBars");
+const maxCount = Math.max(...typeTotals.map(t => t.count));
+typeTotals.forEach(t => {
+const row = document.createElement("div");
+row.className = "bar-row";
+const pct = (t.count / maxCount) * 100;
+row.innerHTML = `<span class="bar-icon">${t.icon}</span>
+<div class="bar-label">${t.label}</div>
+<div class="bar-track"><div class="bar-fill" style="width:${pct}%; background:var(--${t.color});"></div></div>
+<div class="bar-value">${t.count}</div>`;
+typeBars.appendChild(row);
+});
 
-  // ---- top activities list ----
-  const topList = document.getElementById("topList");
-  topActivities.forEach((a, i) => {
-    const li = document.createElement("li");
-    li.innerHTML = `<span class="name-wrap"><span class="rank">${i+1}</span><span><span class="name">${a.name}</span><span class="meta">${a.date}</span></span></span><span class="km">${a.km} km</span>`;
-    topList.appendChild(li);
-  });
+// ---- top activities list ----
+const topList = document.getElementById("topList");
+topActivities.forEach((a, i) => {
+const li = document.createElement("li");
+li.innerHTML = `<span class="name-wrap"><span class="rank">${i+1}</span><span><span class="name">${a.name}</span><span class="meta">${a.date}</span></span></span><span class="km">${a.km} km</span>`;
+topList.appendChild(li);
+});
 
-  // ---- last 7 days vs year avg ----
-  const last7Grid = document.getElementById("last7Grid");
-  const compareRows = [
-    { label: "FC en reposo", v: last7.rhr, avgV: yearAvg.rhr, unit: "bpm", goodDir: -1, icon: "❤️", color: "blue" },
-    { label: "HRV nocturno", v: last7.hrv, avgV: yearAvg.hrv, unit: "ms", goodDir: 1, icon: "💫", color: "aqua" },
-    { label: "Horas de sueño", v: last7.sleepH, avgV: yearAvg.sleepH, unit: "h", goodDir: 1, icon: "🌙", color: "violet" },
-    { label: "Training readiness", v: last7.readiness, avgV: yearAvg.readiness, unit: "", goodDir: 1, icon: "⚡", color: "yellow" },
-  ];
-  compareRows.forEach(r => {
-    const diff = round(r.v - r.avgV, 1);
-    const isGood = (diff >= 0 && r.goodDir === 1) || (diff <= 0 && r.goodDir === -1);
-    const arrow = diff === 0 ? "→" : (diff > 0 ? "▲" : "▼");
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `<div class="stat-icon" style="background:var(--${r.color}-tint); color:var(--${r.color});">${r.icon}</div>
-      <p class="stat-label">${r.label}</p>
-      <div class="stat-value">${round(r.v,1)} <span class="stat-unit">${r.unit}</span></div>
-      <div class="stat-delta ${isGood ? "good" : ""}">${arrow} ${Math.abs(diff)} vs. media anual (${round(r.avgV,1)})</div>`;
-    last7Grid.appendChild(card);
-  });
+// ---- last 7 days vs year avg ----
+const last7Grid = document.getElementById("last7Grid");
+const compareRows = [
+{ label: "FC en reposo", v: last7.rhr, avgV: yearAvg.rhr, unit: "bpm", goodDir: -1, icon: "❤️", color: "blue" },
+{ label: "HRV nocturno", v: last7.hrv, avgV: yearAvg.hrv, unit: "ms", goodDir: 1, icon: "💫", color: "aqua" },
+{ label: "Horas de sueño", v: last7.sleepH, avgV: yearAvg.sleepH, unit: "h", goodDir: 1, icon: "🌙", color: "violet" },
+{ label: "Training readiness", v: last7.readiness, avgV: yearAvg.readiness, unit: "", goodDir: 1, icon: "⚡", color: "yellow" },
+];
+compareRows.forEach(r => {
+const diff = round(r.v - r.avgV, 1);
+const isGood = (diff >= 0 && r.goodDir === 1) || (diff <= 0 && r.goodDir === -1);
+const arrow = diff === 0 ? "→" : (diff > 0 ? "▲" : "▼");
+const card = document.createElement("div");
+card.className = "card";
+card.style.borderTop = `4px solid var(--${r.color})`;
+card.innerHTML = `<div class="stat-icon" style="background:var(--${r.color}-tint); color:var(--${r.color});">${r.icon}</div>
+<p class="stat-label">${r.label}</p>
+<div class="stat-value">${round(r.v,1)} <span class="stat-unit">${r.unit}</span></div>
+<div class="stat-delta ${isGood ? "good" : ""}">${arrow} ${Math.abs(diff)} vs. media anual (${round(r.avgV,1)})</div>`;
+last7Grid.appendChild(card);
+});
 
-  // ---- data table toggle ----
-  const tableBody = document.getElementById("tableBody");
-  monthLabels.forEach((lbl, i) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${lbl} 2026</td>
-      <td>${monthly.rhr[i]}</td><td>${monthly.hrv[i]}</td><td>${monthly.sleepH[i]}</td>
-      <td>${monthly.sleepScore[i]}</td><td>${monthly.stress[i]}</td>
-      <td>${monthly.steps[i].toLocaleString("es-ES")}</td><td>${monthly.readiness[i]}</td>`;
-    tableBody.appendChild(tr);
-  });
-  document.getElementById("tableToggle").addEventListener("click", function () {
-    const t = document.getElementById("dataTable");
-    const showing = t.style.display !== "none";
-    t.style.display = showing ? "none" : "block";
-    this.textContent = showing ? "📋 Ver tabla de datos completa" : "📋 Ocultar tabla de datos";
-  });
+// ---- data table toggle ----
+const tableBody = document.getElementById("tableBody");
+monthLabels.forEach((lbl, i) => {
+const tr = document.createElement("tr");
+tr.innerHTML = `<td>${lbl} 2026</td>
+<td>${monthly.rhr[i]}</td><td>${monthly.hrv[i]}</td><td>${monthly.sleepH[i]}</td>
+<td>${monthly.sleepScore[i]}</td><td>${monthly.stress[i]}</td>
+<td>${monthly.steps[i].toLocaleString("es-ES")}</td><td>${monthly.readiness[i]}</td>`;
+tableBody.appendChild(tr);
+});
+document.getElementById("tableToggle").addEventListener("click", function () {
+const t = document.getElementById("dataTable");
+const showing = t.style.display !== "none";
+t.style.display = showing ? "none" : "block";
+this.textContent = showing ? "📋 Ver tabla de datos completa" : "📋 Ocultar tabla de datos";
+});
 })();
 </script>
 </body>
